@@ -29,7 +29,6 @@ class CoinAnimation(Animation):
 
 
 
-
 ## Coin
 class Coin(Sprite):
     life = 12000

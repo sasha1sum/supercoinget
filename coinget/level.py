@@ -18,7 +18,7 @@ class Level(object):
         self.bounds = Rect((0,0), size)
 
     def restart(self):
-        self.player = Player()
+        self.player = Player(self)
         self.player.rect.center = self.bounds.center
 
         self.coins = CoinGroup(self.bounds)

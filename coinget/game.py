@@ -14,14 +14,18 @@ from level import Level
 from pausemenu import PauseMenu
 from util import sortby_y_h
 
+
 class Game(Application.State):
     fps = 60
+    CHEAT = [ K_UP, K_UP, K_DOWN, K_DOWN, K_LEFT, K_RIGHT, K_LEFT, K_RIGHT, K_b, K_a ]
 
     def setup(self):
         scr_size = self.app.screen.get_size()
 
         self.level = Level(scr_size)
         self.level.restart()
+
+        self.cheat_idx = 0
 
         self.background = TiledImage(load_image("grass"))
 
@@ -49,7 +53,17 @@ class Game(Application.State):
 
     def handle_event(self, event):
         if event.type == KEYDOWN and event.key == K_ESCAPE:
+            self.level.player.cheating = False
             self.app.set_state(PauseMenu)
+
+        elif event.type == KEYDOWN and event.key == self.CHEAT[self.cheat_idx]:
+            self.cheat_idx += 1
+        elif event.type == KEYDOWN:
+            self.cheat_idx = 0
+
+        if self.cheat_idx == len(self.CHEAT):
+            self.cheat_idx = 0
+            self.level.player.cheating = not self.level.player.cheating
 
     def update(self):
         dt = self.clock.tick(self.fps)
