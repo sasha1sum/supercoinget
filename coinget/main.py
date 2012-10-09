@@ -6,7 +6,7 @@ from mainmenu import MainMenu
 def main():
     # initialize pygame
     pygame.init()
-    pygame.display.set_mode((600, 600))
+    pygame.display.set_mode((1024, 768))
     pygame.display.set_caption("Super Coin Get v1.0")
     pygame.display.toggle_fullscreen()
 

@@ -12,7 +12,7 @@ from core.resource import load_image, play_song
 from coin import CoinAnimation
 from game import Game
 from graphics import Animation, TiledImage
-
+from score import Score
 
 class MenuBackground(TiledImage):
     bg_color = 255, 200, 0
@@ -53,12 +53,17 @@ class MainMenu(Application.State):
     flash_rate = 500
 
     def setup(self):
+        if not hasattr(self.app, "scores"):
+            self.app.scores = Score()
 
         self.title = load_image("logo")
 
         font = pygame.font.Font(None, 60)
         font.set_italic(True)
         self.inst = font.render("Press <SPACE> to Start", True, self.fg_color, self.bg_color)
+
+        font.set_italic(False)
+        self.score = font.render("Hiscore: %05d" % self.app.scores.hiscore, True, self.fg_color, self.bg_color)
 
         self.anim = CoinAnimation(duration=100000)
         self.background = MenuBackground()
@@ -95,6 +100,10 @@ class MainMenu(Application.State):
         rect = self.title.get_rect()
         rect.center = bounds.centerx, bounds.centery - bounds.height / 4
         screen.blit(self.title, rect)
+
+        rect = self.score.get_rect()
+        rect.midbottom = bounds.midbottom
+        screen.blit(self.score, rect)
 
         if self.draw_inst:
             rect = self.inst.get_rect()

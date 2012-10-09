@@ -38,8 +38,9 @@ class Game(Application.State):
 
         self.sprites = Group()
 
-        if not hasattr(self.app, "hiscore"):
-            self.app.hiscore = 0
+        self.app.scores.reset()
+
+        self.font = pygame.font.Font(None, 60) 
 
         play_song("maintheme", volume=0.7)
 
@@ -69,10 +70,7 @@ class Game(Application.State):
         dt = self.clock.tick(self.fps)
         self.level.update(dt)
 
-        # handle scores
-        self.score = len(self.level.coins)
-        if self.score > self.app.hiscore:
-            self.app.hiscore = self.score
+        self.app.scores.update( len(self.level.coins) )
 
     def draw(self, screen):
         self.l_shadow.clear()
@@ -96,3 +94,16 @@ class Game(Application.State):
 
         self.l_shadow.draw(screen)
         self.l_sprite.draw(screen)
+
+        # draw score
+
+        score = self.font.render("Coins: %d" % self.app.scores.score, True, (255,255,255))
+        rect = score.get_rect()
+        rect.bottomleft = screen.get_rect().bottomleft
+        screen.blit(score, rect)
+        
+        hiscore = self.font.render("Hiscore: %d" % self.app.scores.hiscore, True, (255,255,255))
+        rect = hiscore.get_rect()
+        rect.bottomright = screen.get_rect().bottomright
+        screen.blit(hiscore, rect)
+
