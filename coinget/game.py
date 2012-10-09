@@ -42,6 +42,8 @@ class Game(Application.State):
 
         self.font = pygame.font.Font(None, 60) 
 
+        self.cheating = False
+
         play_song("maintheme", volume=0.7)
 
 
@@ -70,7 +72,18 @@ class Game(Application.State):
         dt = self.clock.tick(self.fps)
         self.level.update(dt)
 
-        self.app.scores.update( len(self.level.coins) )
+        if self.level.player.cheating:
+            self.cheating = True
+            
+        elif not self.level.player.cheating and len(self.level.coins) == 1:
+            self.cheating = False
+           
+           
+        if not self.cheating: 
+            self.app.scores.update( len(self.level.coins) )
+        else:
+            self.app.scores.update(-1)
+
 
     def draw(self, screen):
         self.l_shadow.clear()
