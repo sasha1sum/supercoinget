@@ -1,6 +1,5 @@
 """
 game.py
-
 """
 
 import pygame
@@ -77,7 +76,6 @@ class Game(Application.State):
             
         elif not self.level.player.cheating and len(self.level.coins) == 1:
             self.cheating = False
-           
            
         if not self.cheating: 
             self.app.scores.update( len(self.level.coins) )
