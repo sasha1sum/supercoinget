@@ -2,4 +2,3 @@
 
 from coinget import main, hack
 main()
-hack()
